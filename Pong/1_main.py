@@ -34,7 +34,7 @@ message = Turtle()
 message.color("white")
 message.hideturtle()
 message.penup()
-message.goto(0, 0)
+message.goto(0, 20)
 message.write(arg="Press 'Space' to start the game", align="center", font=("Courier", 16, "bold"))
 
 game_started = False
