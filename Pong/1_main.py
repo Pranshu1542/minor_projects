@@ -29,16 +29,36 @@ for _ in range(100):
     line.pendown()
 line.penup()
 
+# Display message before starting game
+message = Turtle()
+message.color("white")
+message.hideturtle()
+message.penup()
+message.goto(0, 0)
+message.write(arg="Press 'Space' to start the game", align="center", font=("Courier", 16, "bold"))
+
+game_started = False
+
+def start_game():
+    global game_started
+    game_started = True
+    message.clear()
+
 screen.listen()
 screen.onkey(r_paddle.go_up, "Up")
 screen.onkey(r_paddle.go_down, "Down")
 screen.onkey(l_paddle.go_up, "w")
 screen.onkey(l_paddle.go_down, "s")
+screen.onkey(start_game , "space")
 
 game_is_on = True
 while game_is_on:
     time.sleep(0.01)
     screen.update()
+
+    if not game_started:
+        continue
+
     ball.move()
 
     #Detect collision with wall
@@ -46,16 +66,16 @@ while game_is_on:
         ball.bounce_y()
 
     #Detect collision with paddle
-    if ball.distance(r_paddle) < 60 and ball.xcor() > 320 or ball.distance(l_paddle) < 60 and ball.xcor() < -320:
+    if ball.distance(r_paddle) < 70 and ball.xcor() > 320 or ball.distance(l_paddle) < 70 and ball.xcor() < -320:
         ball.bounce_x()
 
     #Detect R paddle misses
-    if ball.xcor() > 380:
+    if ball.xcor() > 400:
         ball.reset_position()
         scoreboard.l_point()
 
     #Detect L paddle misses:
-    if ball.xcor() < -380:
+    if ball.xcor() < -400:
         ball.reset_position()
         scoreboard.r_point()
 
